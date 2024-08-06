@@ -1,12 +1,16 @@
-import mongoose from 'mongoose'
+// db.js
+import mysql from 'mysql2/promise'
 
-const connectDB=async()=>{
-    try {
-        const connect=await mongoose.connect('mongodb://localhost:27017/MoneyTrackerApp')
-        console.log('mongodb connected')
-    } catch (error) {
-        console.log(error)
-    }
-}
+// Create a connection to the database
+const mysqldb = mysql.createPool({
+  host: 'localhost',
+  user: 'root',     
+  password: 'Barath@1974', 
+  database: 'moneytrackerapp',
+  waitForConnections: true, 
+  connectionLimit: 10,     
+  queueLimit: 0     
+});
 
-export default connectDB
+
+export default mysqldb;

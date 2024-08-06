@@ -6,7 +6,8 @@ const api = axios.create({
   baseURL: baseURL,
 });
 
-export const getAllCategories=async()=>api.get('/expense/allcategories')
-export const addExpense=async(expense)=>{
-    console.log(expense)
-    api.post('/expense',expense)}
+export const getAllCategories = () => api.get('/expense/allcategories');
+
+export const addExpense = (expense) => api.post('/expense', expense);
+
+export const getTimeLineExpenses = (filterdates) => api.get('/expense/timelinexpenses', { params: filterdates });

@@ -27,3 +27,20 @@ export const getAllCategories=async(req,res)=>{
       console.log(error)
     }
 }
+
+export const getTimeLineExpenses=async(req,res)=>{
+     
+  try {
+    const { startdate, enddate } = req.query; 
+    
+    
+    const expenses = await expenseModel.find({
+      date: { $gte: new Date(startdate), $lte: new Date(enddate) }
+    });
+
+    res.status(200).json(expenses);
+  } catch (error) {
+    console.error('Error fetching timeline expenses:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
