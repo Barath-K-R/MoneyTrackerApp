@@ -95,7 +95,9 @@ const Records = () => {
                     </div>
                   );
                 })}
+                <div className="w-[90%] border-b-[1px]"></div>
               </div>
+              
             );
           })}
         </div>
