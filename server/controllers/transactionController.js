@@ -5,7 +5,7 @@ export const addTransaction = async (req, res) => {
     console.log(req.body)
     const { userid, category_id, note, amount, date, type } = req.body;
     
-    const query = 'INSERT INTO transactions (userid, category_id, note, amount, date, type) VALUES (?, ?, ?, ?, ?, ?)';
+    const query = 'INSERT INTO transactions (user_id, category_id, note, amount, date, type) VALUES (?, ?, ?, ?, ?, ?)';
 
     try {
         const [result] = await mysqldb.query(query, [userid, category_id, note, amount, date, type]);
@@ -22,21 +22,23 @@ export const addTransaction = async (req, res) => {
 
 
 export const getTimeLineExpenses=async(req,res)=>{
-    const { startDate, endDate } = req.query;
-
+    console.log(req.body)
+    const { startDate, endDate,userId} = req.body;
+    console.log(startDate+' '+endDate+' '+userId);
+    
     if (!startDate || !endDate) {
         return res.status(400).json({ error: 'Start date and end date are required' });
     }
     const start = new Date(startDate);
     const end = new Date(endDate);
     
-    let query=`SELECT t.id,t.userid,t.category_id,c.name,t.note,t.amount,t.date,t.type
+    let query=`SELECT t.id,t.user_id,t.category_id,c.name,t.note,t.amount,t.date,t.type
                 FROM transactions t
                 JOIN categories c ON c.id = t.category_id
-                where date between ? and ?`
+                where date between ? and ? and t.user_id=?`
 
     try {
-        const [result]=await mysqldb.query(query,[start,end]);
+        const [result]=await mysqldb.query(query,[start,end,userId]);
         console.log(result)
         res.send(result);
     } catch (error) {

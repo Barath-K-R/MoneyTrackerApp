@@ -7,9 +7,8 @@ const api = axios.create({
 });
 
 export const getTimelineExpenses=({ startDate, endDate })=>{
-    const params = new URLSearchParams({
-        startDate: startDate.toISOString().split('T')[0], 
-        endDate: endDate.toISOString().split('T')[0]  
-    });
-    return api.get(`/transaction/timelinexpenses?${params.toString()}`);
+   startDate=startDate.toISOString().split('T')[0];
+   endDate=endDate.toISOString().split('T')[0] ;
+
+    return api.get(`/transaction/timelinexpenses`,{startDate,endDate});
 }
